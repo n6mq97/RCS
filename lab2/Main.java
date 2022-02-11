@@ -22,11 +22,30 @@ public class Main {
                                     {0, 0, 0, 0, 0, 0, 0}};
 
         double[] localProbability = {0.8, 0.42, 0.72, 0.3, 0.6, 0.79, 0.7};
+//        int[][] connectionsTable = {{0, 0, 1, 1, 1, 0},
+//                {0, 0, 1, 1, 0, 1},
+//                {0, 0, 0, 0, 1, 1},
+//                {0, 0, 0, 0, 1, 1},
+//                {0, 0, 0, 0, 0, 0},
+//                {0, 0, 0, 0, 0, 0}};
+//
+//        double[] localProbability = {0.74, 0.14, 0.56, 0.35, 0.2, 0.21};
 
         printConnectionsTable(connectionsTable);
         printLocalProbability(localProbability);
         List<String> ways = new ArrayList<>();
-        findWays(connectionsTable, 0, "", ways);
+        for (int i = 0; i < connectionsTable.length; i++) {
+            boolean isStart = true;
+            for (int j = 0; j < connectionsTable.length; j++) {
+                if (connectionsTable[j][i] == 1) {
+                    isStart = false;
+                    break;
+                }
+            }
+            if (isStart) {
+                findWays(connectionsTable, i, "0".repeat(i), ways);
+            }
+        }
         printWays(ways);
         List<String> suitableCombinations = enumerate(ways);
         findProbability(suitableCombinations, localProbability);
